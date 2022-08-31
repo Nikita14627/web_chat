@@ -1,18 +1,9 @@
-from django.shortcuts import render
-from django.shortcuts import render
 import asyncio
 
 from pywebio import start_server
 from pywebio.input import *
 from pywebio.output import *
 from pywebio.session import defer_call, info as session_info, run_async, run_js
-
-from flask import Flask, json,request
-import logging
-
-logging.basicConfig(level=logging.DEBUG)
-
-
 
 chat_msgs = []
 online_users = set()
@@ -22,7 +13,7 @@ MAX_MESSAGES_COUNT = 100
 async def main():
     global chat_msgs
     
-    put_markdown("## 🧊 Добро пожаловать в онлайн чат!")
+    put_markdown("## 🧊 Добро пожаловать в онлайн чат!\nИсходный код данного чата укладывается в 100 строк кода!")
 
     msg_box = output()
     put_scrollable(msg_box, height=300, keep_bottom=True)
@@ -72,16 +63,6 @@ async def refresh_msg(nickname, msg_box):
             chat_msgs = chat_msgs[len(chat_msgs) // 2:]
         
         last_idx = len(chat_msgs)
-
-
-app = Flask(__name__)
-@app.route('/')
-def index():
-
-    return "<p>Hello, World</p>"
-    return main()
-    return refresh_msg()
-
 
 if __name__ == "__main__":
     start_server(main, debug=True, port=8080, cdn=False)
